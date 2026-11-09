@@ -150,6 +150,75 @@
   .btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
   .btn.ghost{margin-right:auto;color:var(--muted)}
 
+  /* ---------- 個人の予定 ---------- */
+  .chip.mine{outline:1.5px dashed color-mix(in srgb,var(--c) 70%,transparent);outline-offset:-1.5px}
+  .ev.mine .bar{background:repeating-linear-gradient(180deg,var(--c) 0 5px,transparent 5px 8px)}
+  .panel h3 .add{margin-left:auto;height:32px;font-size:13px;padding:0 12px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .form textarea{width:100%;font:inherit;font-size:14px;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical}
+  .form textarea:focus{outline:2px solid var(--accent);outline-offset:-1px}
+  .swatches{display:flex;gap:8px;flex-wrap:wrap}
+  .swatches input{appearance:none;-webkit-appearance:none;width:30px;height:30px;border-radius:50%;background:var(--sw);margin:0;cursor:pointer;border:3px solid var(--card);box-shadow:0 0 0 1px var(--line)}
+  .swatches input:checked{box-shadow:0 0 0 2px var(--sw)}
+  .form-err{color:var(--sun);font-size:13px;font-weight:700;margin-top:10px;min-height:0}
+  .mine-note{font-size:12px;color:var(--muted);margin-right:auto;align-self:center}
+  .btn.danger{color:var(--sun)}
+  .btn.danger.armed{background:var(--sun);color:#fff;border-color:var(--sun)}
+
+  /* ---------- 画像書き出し ---------- */
+  dialog.wide{width:min(760px,calc(100vw - 32px))}
+  .exp-preview{border:1px solid var(--line);border-radius:14px;background:var(--bg);min-height:220px;display:grid;place-items:center;overflow:hidden;color:var(--muted);font-size:14px}
+  .exp-preview img{display:block;width:100%;height:auto}
+  .checks{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px}
+  .form label.check{display:flex;align-items:center;gap:8px;margin:0;font-weight:500;font-size:14px;cursor:pointer}
+  .form label.check input{width:18px;height:18px;accent-color:var(--accent)}
+  #exportStage{position:fixed;left:-30000px;top:0;pointer-events:none}
+  .exp{width:1400px;padding:46px 52px 34px;background:var(--bg);color:var(--ink);font-family:"Zen Kaku Gothic New","Hiragino Sans","Noto Sans JP","Yu Gothic",sans-serif;-webkit-font-smoothing:antialiased}
+  .exp.light{--bg:#f4f5fa;--card:#fff;--ink:#1c2230;--muted:#6c7488;--faint:#b3b8c6;--line:#e7e9f0;--accent:#5a5cf0;--accent-ink:#fff;--sun:#e5484d;--sat:#3b7cf6}
+  .exp.dark{--bg:#0f1117;--card:#171a23;--ink:#e9ebf2;--muted:#9097a8;--faint:#4b5163;--line:#262a36;--accent:#8487ff;--accent-ink:#0f1117;--sun:#ff6b70;--sat:#6ea1ff}
+  .exp-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:20px}
+  .exp-title{font-size:17px;font-weight:700;letter-spacing:.08em;color:var(--muted);margin-bottom:6px}
+  .exp-month{display:flex;align-items:baseline;gap:8px;font-family:Outfit,sans-serif;line-height:1}
+  .exp-month b{font-size:76px;font-weight:700;letter-spacing:-.02em}
+  .exp-month i{font-style:normal;font-family:"Zen Kaku Gothic New",sans-serif;font-size:28px;font-weight:700}
+  .exp-month span{font-size:28px;font-weight:600;color:var(--muted);margin-left:10px}
+  .exp-legend{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;max-width:640px}
+  .exp-legend span{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 14px 6px 11px;font-size:15px;font-weight:500}
+  .exp-legend i{width:11px;height:11px;border-radius:50%;background:var(--c)}
+  .exp-legend span.mine i{background:transparent;box-shadow:inset 0 0 0 2px var(--c)}
+  .exp-cal{background:var(--card);border:1px solid var(--line);border-radius:22px;overflow:hidden}
+  .exp-dow,.exp-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+  .exp-dow div{padding:14px 14px 12px;font-size:14px;font-weight:700;color:var(--muted);letter-spacing:.08em;border-bottom:1px solid var(--line)}
+  .exp-dow .sun{color:var(--sun)} .exp-dow .sat{color:var(--sat)}
+  .exp-cell{position:relative;min-height:150px;padding:10px 8px 8px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:4px;min-width:0}
+  .exp-cell:nth-child(7n){border-right:0}
+  .exp-cell.last{border-bottom:0}
+  .exp-cell>*{position:relative;z-index:1}
+  .exp-cell .bgimg{position:absolute;inset:0;z-index:0}
+  .exp-cell .bgimg img{width:100%;height:100%;object-fit:cover;display:block}
+  .exp-cell .bgimg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.28),rgba(0,0,0,0) 45%,rgba(0,0,0,.12))}
+  .exp-num{font-family:Outfit,sans-serif;font-weight:600;font-size:17px;width:32px;height:32px;display:grid;place-items:center;border-radius:50%;margin:0 0 2px 2px}
+  .exp-cell.sun .exp-num{color:var(--sun)} .exp-cell.sat .exp-num{color:var(--sat)}
+  .exp-cell.out .exp-num{color:var(--faint)}
+  .exp-cell.out .exp-chip,.exp-cell.out .exp-thumb{opacity:.45}
+  .exp-cell.bg .exp-num{background:rgba(255,255,255,.92);color:#1c2230}
+  .exp-chip{display:flex;align-items:center;gap:6px;padding:4px 8px;border-radius:7px;font-size:13.5px;line-height:1.35;font-weight:500;color:var(--ink);
+            background:color-mix(in srgb,var(--c) 15%,var(--card));box-shadow:inset 3px 0 0 var(--c);white-space:nowrap;overflow:hidden}
+  .exp-chip .t{font-family:Outfit,sans-serif;font-weight:600;color:color-mix(in srgb,var(--c) 75%,var(--ink));flex:none}
+  .exp-chip .n{overflow:hidden;text-overflow:ellipsis}
+  .exp-chip.cont{box-shadow:none;border-radius:0 7px 7px 0}
+  .exp-chip.cont .n::before{content:"↳ ";opacity:.6}
+  .exp-chip.mine{outline:1.5px dashed color-mix(in srgb,var(--c) 70%,transparent);outline-offset:-1.5px}
+  .exp-thumb{display:block;width:100%;height:74px;object-fit:cover;border-radius:8px}
+  .exp-more{font-size:12.5px;font-weight:700;color:var(--muted);padding:0 8px}
+  .exp-foot{display:flex;justify-content:space-between;margin-top:14px;font-size:13px;color:var(--muted)}
+
+  #debugBox{background:#fff8e6;color:#4a3a00;border:1px solid #f5d27a;border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:13px;line-height:1.8;word-break:break-all}
+  #debugBox code{background:#fff;padding:1px 6px;border-radius:5px;border:1px solid #f0e0b0}
+  #debugBox .ng{color:#c62828;font-weight:700}
+  #debugBox .mono{font-family:ui-monospace,monospace;font-size:12px}
+  .img-err{display:grid;place-items:center;background:#ffe3e3;color:#c62828;font-size:11px;font-weight:700;border-radius:8px;min-height:24px}
+
   /* ---------- mobile ---------- */
   @media (max-width:720px){
     .controls{width:100%}
@@ -169,6 +238,8 @@
     .thumb{height:36px}
     .thumb-btn{border-radius:5px}
     .ev-img{width:48px;height:48px}
+    #addBtn{padding:0 12px}
+    .two{gap:8px}
     .ev .when{width:70px;font-size:12px}
     .group{grid-template-columns:52px 1fr;gap:6px}
     .list{padding:4px 10px 10px}
@@ -192,6 +263,10 @@
         <button data-view="month" class="active">月</button>
         <button data-view="list">リスト</button>
       </div>
+      <button class="btn primary" id="addBtn" title="個人の予定を追加">＋ 予定</button>
+      <button class="icon-btn" id="exportBtn" title="画像で保存" aria-label="画像で保存">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="9" r="1.6"/><path d="M21 15l-5-5L5 21"/></svg>
+      </button>
       <button class="icon-btn" id="reload" title="再読み込み" aria-label="再読み込み">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
       </button>
@@ -218,6 +293,57 @@
 </div>
 
 <dialog id="eventDlg"><div id="eventDlgInner"></div></dialog>
+
+<dialog id="personalDlg" style="--c:#14b8a6">
+  <div class="dlg-head"></div>
+  <form class="dlg-body form" id="pForm" novalidate>
+    <button type="button" class="dlg-x" data-close aria-label="閉じる">×</button>
+    <h2 class="dlg-title" id="pHeading" style="font-size:19px">個人の予定を追加</h2>
+    <label for="pTitle">タイトル</label>
+    <input id="pTitle" name="title" maxlength="80" placeholder="例：練習、配信を見る">
+    <div class="two">
+      <div><label for="pDate">日付</label><input id="pDate" type="date" name="date"></div>
+      <div><label for="pEnd">終了日（任意）</label><input id="pEnd" type="date" name="endDate"></div>
+    </div>
+    <div class="two">
+      <div><label for="pSt">開始時刻（任意）</label><input id="pSt" type="time" name="startTime"></div>
+      <div><label for="pEt">終了時刻（任意）</label><input id="pEt" type="time" name="endTime"></div>
+    </div>
+    <label for="pPlace">場所（任意）</label>
+    <input id="pPlace" name="place">
+    <label for="pDesc">メモ（任意）</label>
+    <textarea id="pDesc" name="desc" rows="3"></textarea>
+    <label>色</label>
+    <div class="swatches" id="swatches"></div>
+    <div class="form-err" id="pErr"></div>
+    <div class="hint">個人の予定はこのブラウザだけに保存されます。ほかの人には表示されません。</div>
+    <div class="actions">
+      <button type="button" class="btn" data-close>キャンセル</button>
+      <button type="submit" class="btn primary">保存</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="exportDlg" class="wide">
+  <div class="dlg-head"></div>
+  <div class="dlg-body form">
+    <button class="dlg-x" data-close aria-label="閉じる">×</button>
+    <h2 class="dlg-title" style="font-size:19px">画像で保存</h2>
+    <div class="exp-preview" id="expPreview"><span>作成中…</span></div>
+    <div class="checks">
+      <label class="check"><input type="checkbox" id="expPersonal" checked> 個人の予定を含める</label>
+      <label class="check"><input type="checkbox" id="expDark"> ダークテーマ</label>
+    </div>
+    <div class="hint" id="expNote"></div>
+    <div class="actions">
+      <button class="btn" data-close>閉じる</button>
+      <button class="btn" id="expShare" hidden>共有</button>
+      <button class="btn primary" id="expSave" disabled>PNGを保存</button>
+    </div>
+  </div>
+</dialog>
+
+<div id="exportStage" aria-hidden="true"></div>
 
 <dialog id="settingsDlg">
   <div class="dlg-head"></div>
@@ -248,9 +374,9 @@
    （URLパラメータ ?sheet=...&tab=...&title=... でも指定できます）
    ========================================================= */
 const CONFIG = {
-  SHEET_URL:  'https://docs.google.com/spreadsheets/d/1-0YTNoP90UotyKCw8HoVjwyVtm7O9p7OW5eoznuQV-I/edit?usp=sharing',          // 例: 'https://docs.google.com/spreadsheets/d/XXXXXXXX/edit#gid=0'
+  SHEET_URL:  '',          // 例: 'https://docs.google.com/spreadsheets/d/XXXXXXXX/edit#gid=0'
   SHEET_NAME: '',          // 例: '予定'（空ならURLのgidか先頭のシート）
-  TITLE:      'NexuSquidカレンダー',
+  TITLE:      'カレンダー',
   WEEK_START: 0,           // 0 = 日曜始まり / 1 = 月曜始まり
   MAX_PER_DAY: 4,          // 1マスに表示する最大件数（超えた分は「+N件」）
   REFRESH_SEC: 30,         // 自動更新の間隔（秒）。シートの変更がこの間隔で画面に反映されます
@@ -275,13 +401,43 @@ const FIELDS = {
 
 // Googleドライブの共有リンクを表示できる画像URLに変換
 function normalizeImg(u){
-  u = String(u||'').trim();
+  u = String(u||'').trim().replace(/^["'「]|["'」]$/g,'');
   if(!u) return '';
-  const m = u.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=\w+&)?id=)([\w-]+)/);
-  if(m) return `https://drive.google.com/thumbnail?id=${m[1]}&sz=w1200`;
-  return u;   // 通常のURL、または GitHub リポジトリ内の相対パス（images/xxx.png など）
+  // =IMAGE("https://...") と文字で書かれていた場合は中のURLを取り出す
+  const f = u.match(/IMAGE\(\s*"([^"]+)"/i); if(f) u = f[1];
+  // Googleドライブの共有リンク各種 → ファイルID
+  const m = u.match(/drive\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:[^#]*&)?id=|thumbnail\?(?:[^#]*&)?id=)([\w-]{10,})/)
+         || u.match(/docs\.google\.com\/uc\?(?:[^#]*&)?id=([\w-]{10,})/);
+  if(m) return 'gdrive:' + m[1];
+  // GitHub の「blob」ページURL → 画像そのもののURLに変換
+  const gh = u.match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\/blob\/(.+)$/);
+  if(gh) return `https://raw.githubusercontent.com/${gh[1]}/${gh[2]}/${gh[3]}`;
+  // 先頭の / や ./ は取る（GitHub Pages はリポジトリ名の下に置かれるため）
+  if(!/^(https?:|data:)/i.test(u)) u = u.replace(/^\.?\//,'');
+  return u;
 }
-const imgTag = (src, cls, alt='') => `<img class="${cls}" src="${esc(src)}" alt="${esc(alt)}" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">`;
+// Googleドライブは表示できるURLが環境で違うので、順番に試す
+function imgCandidates(src){
+  if(src.startsWith('gdrive:')){
+    const id = src.slice(7);
+    return [`https://lh3.googleusercontent.com/d/${id}=w1200`,
+            `https://drive.google.com/thumbnail?id=${id}&sz=w1200`,
+            `https://drive.google.com/uc?export=view&id=${id}`];
+  }
+  return [src];
+}
+const failedImgs = new Map();   // 元の値 → 理由
+function imgFail(el){
+  const rest = (el.dataset.alt || '').split('|').filter(Boolean);
+  if(rest.length){ el.dataset.alt = rest.slice(1).join('|'); el.src = rest[0]; return; }
+  failedImgs.set(el.dataset.orig, true);
+  if(DEBUG){ el.outerHTML = `<span class="img-err ${el.className}" title="${esc(el.dataset.orig)}">画像NG</span>`; showDebug(); }
+  else el.remove();
+}
+const imgTag = (src, cls, alt='') => {
+  const c = imgCandidates(src);
+  return `<img class="${cls}" src="${esc(c[0])}" data-alt="${esc(c.slice(1).join('|'))}" data-orig="${esc(src)}" alt="${esc(alt)}" loading="lazy" referrerpolicy="no-referrer" onerror="imgFail(this)">`;
+};
 
 /* ---------- state ---------- */
 const store = {
@@ -303,7 +459,25 @@ const today0 = () => { const d=new Date(); return new Date(d.getFullYear(),d.get
 let cursor = new Date(today0().getFullYear(), today0().getMonth(), 1);
 let selected = today0();
 let view = 'month';
-let events = [];
+let events = [];          // 表示用（シート＋個人）
+let sheetEvents = [];     // スプレッドシートから読んだ予定
+const PERSONAL_COLORS = ['#14b8a6','#5a5cf0','#f0596b','#f59e0b','#0ea5e9','#a855f7','#ec4899','#64748b'];
+const PERSONAL_LABEL = '個人';
+const DEBUG = params.has('debug');
+const debugInfo = {};
+function showDebug(){
+  if(!DEBUG) return;
+  let box = document.getElementById('debugBox');
+  if(!box){ box = document.createElement('div'); box.id = 'debugBox'; document.querySelector('.app').prepend(box); }
+  const imgs = debugInfo.imageValues || [];
+  const fails = [...failedImgs.keys()];
+  box.innerHTML = `<b>診断モード</b>
+    <div>読み込んだ見出し：${(debugInfo.headers||[]).map(h=>`<code>${esc(h)}</code>`).join(' ') || '（なし）'}</div>
+    <div>画像列：${debugInfo.imageCol ? `<code>${esc(debugInfo.imageCol)}</code> を認識（URLが入っている行：${imgs.length}件）` : '<span class="ng">見つかりません。1行目に「画像」という列名を入れてください</span>'}</div>
+    ${debugInfo.imageCol && !imgs.length ? '<div class="ng">画像列が空として読み込まれています。セルに画像を直接貼る／=IMAGE() 関数では読み込めません。URLを文字で入れてください。</div>' : ''}
+    ${imgs.slice(0,8).map(v => `<div class="mono">・${esc(v)} → ${esc(imgCandidates(normalizeImg(v))[0])}${failedImgs.has(normalizeImg(v))?' <span class="ng">表示失敗</span>':''}</div>`).join('')}
+    ${fails.length ? `<div class="ng">表示できなかった画像：${fails.length}件（URLの間違い・共有設定・ファイル名の大文字小文字を確認）</div>` : ''}`;
+}
 let byDay = new Map();
 let bgByDay = new Map();
 let catColors = new Map();
@@ -388,6 +562,11 @@ function rowsToEvents(rows){
   }
   if(idx.title === undefined) idx.title = idx.date === 0 ? 1 : 0;
   const get = (r,k) => idx[k] === undefined ? '' : (r[idx[k]] ?? '').trim();
+  debugInfo.headers = rows[0];
+  debugInfo.found = Object.keys(idx);
+  debugInfo.imageCol = idx.image === undefined ? null : rows[0][idx.image];
+  debugInfo.imageValues = idx.image === undefined ? [] : body.map(r => (r[idx.image]||'').trim()).filter(Boolean);
+  debugInfo.emptyImageRows = 0;
 
   const out = [];
   for(const r of body){
@@ -429,15 +608,15 @@ async function load(silent){
   try{
     const csvUrl = buildCsvUrl(source.url, source.sheet);
     if(!csvUrl){
-      if(lastText !== 'DEMO'){ events = demoEvents(); lastText = 'DEMO'; changed = true; }
+      if(lastText !== 'DEMO'){ sheetEvents = demoEvents(); lastText = 'DEMO'; changed = true; }
       setStatus('デモ表示中 — index.html の CONFIG.SHEET_URL にスプレッドシートのURLを書いてください');
     }else{
       const res = await fetch(csvUrl + (csvUrl.includes('?') ? '&' : '?') + '_t=' + Date.now(), {cache:'no-store'});
       if(!res.ok) throw new Error(`HTTP ${res.status}`);
       const text = await res.text();
       if(/^\s*<(!doctype|html)/i.test(text)) throw new Error('NOT_PUBLIC');
-      if(text !== lastText){ events = rowsToEvents(parseCSV(text)); lastText = text; changed = true; }
-      setStatus(`<span class="live"></span>${events.length}件の予定 · ${hhmmss(new Date())} 確認${CONFIG.REFRESH_SEC>0?` · ${CONFIG.REFRESH_SEC}秒ごとに自動更新`:''}`, false, true);
+      if(text !== lastText){ sheetEvents = rowsToEvents(parseCSV(text)); lastText = text; changed = true; }
+      setStatus(`<span class="live"></span>${sheetEvents.filter(e=>!e.bg).length}件の予定 · ${hhmmss(new Date())} 確認${CONFIG.REFRESH_SEC>0?` · ${CONFIG.REFRESH_SEC}秒ごとに自動更新`:''}`, false, true);
       if(changed && loadedOnce) flash();
     }
   }catch(e){
@@ -450,7 +629,8 @@ async function load(silent){
   }finally{
     reloadBtn.classList.remove('spin');
     loading = false;
-    if(changed || !loadedOnce){ index(); render(); }
+    if(changed || !loadedOnce) rebuild();
+    showDebug();
     loadedOnce = true;
   }
 }
@@ -459,39 +639,68 @@ function setStatus(t, err, html){ const s=$('#status'); s[html?'innerHTML':'text
 function flash(){ const s=$('#status'); s.classList.remove('flash'); void s.offsetWidth; s.classList.add('flash'); }
 
 /* ---------- indexing ---------- */
+const pad2 = n => String(n).padStart(2,'0');
+const iso = d => `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
+const fromIso = s => { const m = String(s||'').match(/^(\d{4})-(\d{2})-(\d{2})$/); return m ? new Date(+m[1], +m[2]-1, +m[3]) : null; };
+
+/* ---------- 個人の予定（ブラウザの localStorage に保存） ---------- */
+let personalMem = null;   // localStorage が使えない環境用
+function loadPersonal(){
+  if(personalMem) return personalMem;
+  try{ const v = JSON.parse(localStorage.getItem('sscal:personal') || '[]'); return Array.isArray(v) ? v : []; }
+  catch(e){ return []; }
+}
+function savePersonal(list){
+  try{ localStorage.setItem('sscal:personal', JSON.stringify(list)); personalMem = null; }
+  catch(e){ personalMem = list; }
+}
+function personalToEvent(p){
+  const start = fromIso(p.date); if(!start) return null;
+  let end = fromIso(p.endDate) || start; if(end < start) end = start;
+  return { id:p.id, title:p.title, start, end, startTime:p.startTime||'', endTime:p.endTime||'',
+           category:PERSONAL_LABEL, place:p.place||'', desc:p.desc||'', url:'', image:'', bg:false,
+           color:p.color||PERSONAL_COLORS[0], personal:true };
+}
+function rebuild(){
+  events = [...sheetEvents, ...loadPersonal().map(personalToEvent).filter(Boolean)];
+  index(); render();
+}
+
+function buildDayMap(list){
+  const map = new Map();
+  for(const e of list){
+    for(let d=e.start, n=0; d<=e.end && n<366; d=addDays(d,1), n++){
+      const k = keyOf(d);
+      if(!map.has(k)) map.set(k, []);
+      map.get(k).push({e, cont: n > 0});
+    }
+  }
+  for(const l of map.values()){
+    l.sort((a,b) => (a.cont===b.cont ? 0 : a.cont ? -1 : 1)
+      || ((b.e.end - b.e.start) - (a.e.end - a.e.start))
+      || (a.e.personal === b.e.personal ? 0 : a.e.personal ? 1 : -1)
+      || timeVal(a.e.startTime) - timeVal(b.e.startTime));
+  }
+  return map;
+}
+
 function index(){
   catColors = new Map();
   let p = 0;
   for(const e of events){
-    if(e.bg) continue;
+    if(e.bg || e.personal) continue;
     const c = e.category || '';
     if(!catColors.has(c)) catColors.set(c, null);
     if(e.color && !catColors.get(c)) catColors.set(c, e.color);
   }
   for(const [c,v] of catColors) if(!v) catColors.set(c, PALETTE[p++ % PALETTE.length]);
+  if(events.some(e => e.personal)) catColors.set(PERSONAL_LABEL, PERSONAL_COLORS[0]);
   for(const e of events) e.c = e.color || catColors.get(e.category || '');
 
-  byDay = new Map();
   bgByDay = new Map();
-  for(const e of events){
-    if(e.bg){
-      for(let d=e.start, n=0; d<=e.end && n<366; d=addDays(d,1), n++) bgByDay.set(keyOf(d), e.image);
-      continue;
-    }
-    if(hidden.has(e.category || '')) continue;
-    let d = e.start, n = 0;
-    while(d <= e.end && n < 366){
-      const k = keyOf(d);
-      if(!byDay.has(k)) byDay.set(k, []);
-      byDay.get(k).push({e, cont: n > 0});
-      d = addDays(d,1); n++;
-    }
-  }
-  for(const list of byDay.values()){
-    list.sort((a,b) => (a.cont===b.cont ? 0 : a.cont ? -1 : 1)
-      || (a.e.end - a.e.start === b.e.end - b.e.start ? 0 : (b.e.end - b.e.start) - (a.e.end - a.e.start))
-      || timeVal(a.e.startTime) - timeVal(b.e.startTime));
-  }
+  for(const e of events) if(e.bg)
+    for(let d=e.start, n=0; d<=e.end && n<366; d=addDays(d,1), n++) bgByDay.set(keyOf(d), e.image);
+  byDay = buildDayMap(events.filter(e => !e.bg && !hidden.has(e.category || '')));
 }
 
 /* ---------- rendering ---------- */
@@ -508,7 +717,7 @@ function render(){
 function renderLegend(){
   const cats = [...catColors.keys()].filter(c => c);
   $('#legend').innerHTML = cats.map(c =>
-    `<button class="tag ${hidden.has(c)?'off':''}" style="--c:${esc(catColors.get(c))}" data-cat="${esc(c)}"><i></i>${esc(c)}</button>`
+    `<button class="tag ${hidden.has(c)?'off':''}" style="--c:${esc(catColors.get(c))}" data-cat="${esc(c)}"><i></i>${esc(c)}${c===PERSONAL_LABEL?'（自分だけ）':''}</button>`
   ).join('');
 }
 
@@ -537,7 +746,7 @@ function renderMonth(){
     const chips = shown.map(({e,cont}) => {
       const ei = events.indexOf(e);
       const time = !cont && e.startTime ? `<span class="t">${e.startTime}</span>` : '';
-      return `<button class="chip ${cont?'cont':''}" style="--c:${esc(e.c)}" data-ev="${ei}" title="${esc(e.title)}">${time}<span class="n">${esc(e.title)}</span></button>`;
+      return `<button class="chip ${cont?'cont':''} ${e.personal?'mine':''}" style="--c:${esc(e.c)}" data-ev="${ei}" title="${esc(e.title)}">${time}<span class="n">${esc(e.title)}</span></button>`;
     }).join('');
     const more = items.length > shown.length ? `<button class="more" data-day="${k}">+${items.length-shown.length}件</button>` : '';
     const bg = bgByDay.get(k);
@@ -561,7 +770,7 @@ function evRow(e, cont){
   const ei = events.indexOf(e);
   const when = cont ? '継続' : e.startTime ? `${e.startTime}${e.endTime?'<br>〜'+e.endTime:''}` : '終日';
   const meta = [e.place, e.desc.split('\n')[0]].filter(Boolean).join('　·　');
-  return `<button class="ev" style="--c:${esc(e.c)}" data-ev="${ei}">
+  return `<button class="ev ${e.personal?'mine':''}" style="--c:${esc(e.c)}" data-ev="${ei}">
     <span class="bar"></span><span class="when">${when}</span>
     <span class="body"><span class="name">${esc(e.title)}</span>${e.category?`<span class="badge">${esc(e.category)}</span>`:''}
     ${meta?`<div class="meta">${esc(meta)}</div>`:''}</span>${e.image?imgTag(e.image,'ev-img'):''}</button>`;
@@ -573,7 +782,7 @@ function renderDayPanel(){
   p.hidden = false;
   const items = byDay.get(keyOf(selected)) || [];
   const bg = bgByDay.get(keyOf(selected));
-  p.innerHTML = (bg ? imgTag(bg,'panel-img') : '') + `<h3>${fmtDay(selected)}<small>${items.length ? items.length+'件' : ''}</small></h3>` +
+  p.innerHTML = (bg ? imgTag(bg,'panel-img') : '') + `<h3>${fmtDay(selected)}<small>${items.length ? items.length+'件' : ''}</small><button class="btn add" data-add="${iso(selected)}">＋ この日に追加</button></h3>` +
     (items.length ? items.map(({e,cont}) => evRow(e,cont)).join('') : `<div class="empty">予定はありません</div>`);
 }
 
@@ -614,6 +823,9 @@ function openEvent(i){
       ${e.place?`<div class="row"><span class="ic">${ICON.pin}</span><span>${linkify(e.place)}</span></div>`:''}
       ${e.desc?`<div class="row"><span class="ic">${ICON.note}</span><span class="desc">${linkify(e.desc)}</span></div>`:''}
       ${/^https?:\/\//.test(e.url)?`<a class="linkbtn" href="${esc(e.url)}" target="_blank" rel="noopener">リンクを開く ↗</a>`:''}
+      ${e.personal?`<div class="actions"><span class="mine-note">自分だけに表示されている予定です</span>
+        <button class="btn" data-edit="${esc(e.id)}">編集</button>
+        <button class="btn danger" data-del="${esc(e.id)}">削除</button></div>`:''}
     </div>`;
   dlg.showModal();
 }
@@ -624,6 +836,16 @@ document.addEventListener('click', ev => {
   const evBtn = t.closest('[data-ev]');
   if(evBtn && (!isMobile() || evBtn.classList.contains('ev'))){
     openEvent(+evBtn.dataset.ev); return;
+  }
+  const add = t.closest('[data-add]');
+  if(add){ openPersonalForm({date: add.dataset.add}); return; }
+  const edit = t.closest('[data-edit]');
+  if(edit){ const p = loadPersonal().find(x => x.id === edit.dataset.edit); $('#eventDlg').close(); if(p) openPersonalForm(p); return; }
+  const del = t.closest('[data-del]');
+  if(del){
+    if(!del.classList.contains('armed')){ del.classList.add('armed'); del.textContent = 'もう一度押すと削除'; return; }
+    savePersonal(loadPersonal().filter(x => x.id !== del.dataset.del));
+    $('#eventDlg').close(); rebuild(); return;
   }
   const close = t.closest('[data-close]');
   if(close){ close.closest('dialog').close(); return; }
@@ -684,6 +906,186 @@ $('#sDemo').onclick = () => {
   source = { url:'', sheet:'', title: CONFIG.TITLE };
   store.set('url',''); store.set('sheet',''); store.set('title','');
   $('#settingsDlg').close(); hidden.clear(); lastText = null; load();
+};
+
+/* ---------- 個人の予定フォーム ---------- */
+let editingId = null;
+$('#swatches').innerHTML = PERSONAL_COLORS.map((c,i) =>
+  `<input type="radio" name="color" value="${c}" style="--sw:${c}" aria-label="色${i+1}" ${i===0?'checked':''}>`).join('');
+
+function openPersonalForm(p){
+  p = p || {};
+  editingId = p.id || null;
+  const f = $('#pForm');
+  $('#pHeading').textContent = editingId ? '個人の予定を編集' : '個人の予定を追加';
+  f.elements.namedItem('title').value = p.title || '';
+  f.elements.namedItem('date').value = p.date || iso(selected || today0());
+  f.elements.namedItem('endDate').value = p.endDate || '';
+  f.elements.namedItem('startTime').value = p.startTime || '';
+  f.elements.namedItem('endTime').value = p.endTime || '';
+  f.elements.namedItem('place').value = p.place || '';
+  f.elements.namedItem('desc').value = p.desc || '';
+  const color = p.color || PERSONAL_COLORS[0];
+  f.querySelectorAll('[name=color]').forEach(r => r.checked = r.value === color);
+  if(![...f.querySelectorAll('[name=color]')].some(r => r.checked)) f.querySelector('[name=color]').checked = true;
+  $('#pErr').textContent = '';
+  $('#personalDlg').showModal();
+  setTimeout(() => f.elements.namedItem('title').focus(), 50);
+}
+
+$('#addBtn').onclick = () => openPersonalForm();
+$('#pForm').addEventListener('submit', ev => {
+  ev.preventDefault();
+  const f = ev.target;
+  const title = f.elements.namedItem('title').value.trim();
+  if(!title){ $('#pErr').textContent = 'タイトルを入力してください'; f.elements.namedItem('title').focus(); return; }
+  if(!fromIso(f.elements.namedItem('date').value)){ $('#pErr').textContent = '日付を入力してください'; f.elements.namedItem('date').focus(); return; }
+  if(f.elements.namedItem('endDate').value && f.elements.namedItem('endDate').value < f.elements.namedItem('date').value){ $('#pErr').textContent = '終了日は開始日より後にしてください'; return; }
+  const item = {
+    id: editingId || ('p' + Date.now().toString(36) + Math.random().toString(36).slice(2,6)),
+    title, date: f.elements.namedItem('date').value, endDate: f.elements.namedItem('endDate').value,
+    startTime: f.elements.namedItem('startTime').value, endTime: f.elements.namedItem('endTime').value,
+    place: f.elements.namedItem('place').value.trim(), desc: f.elements.namedItem('desc').value.trim(),
+    color: (f.querySelector('[name=color]:checked') || {}).value || PERSONAL_COLORS[0],
+  };
+  const list = loadPersonal().filter(x => x.id !== item.id);
+  list.push(item);
+  savePersonal(list);
+  hidden.delete(PERSONAL_LABEL);
+  $('#personalDlg').close();
+  selected = fromIso(item.date);
+  cursor = new Date(selected.getFullYear(), selected.getMonth(), 1);
+  rebuild();
+});
+
+/* ---------- 画像で書き出し ---------- */
+const H2I_SRC = 'https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js';
+const BLANK = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+let h2iPromise = null, fontCache = new Map(), expBlob = null, expUrl = null, expToken = 0;
+
+function loadH2I(){
+  if(window.htmlToImage) return Promise.resolve();
+  return h2iPromise ||= new Promise((ok, ng) => {
+    const sc = document.createElement('script');
+    sc.src = H2I_SRC; sc.onload = ok; sc.onerror = () => { h2iPromise = null; ng(new Error('ライブラリを読み込めませんでした')); };
+    document.head.appendChild(sc);
+  });
+}
+const blobToDataUrl = b => new Promise(ok => { const fr = new FileReader(); fr.onload = () => ok(fr.result); fr.readAsDataURL(b); });
+
+// 画像に使われている文字だけを含むフォントを Google Fonts から取得して埋め込む（軽量・高速）
+async function fontCss(text){
+  const chars = [...new Set(text + '0123456789年月日火水木金土+件↳…:〜・')].join('');
+  if(fontCache.has(chars)) return fontCache.get(chars);
+  const url = 'https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=block&text=' + encodeURIComponent(chars);
+  let css = await (await fetch(url)).text();
+  const urls = [...new Set(css.match(/https:\/\/fonts\.gstatic\.com\/[^)'"]+/g) || [])];
+  const data = await Promise.all(urls.map(async u => blobToDataUrl(await (await fetch(u)).blob())));
+  urls.forEach((u,i) => { css = css.split(u).join(data[i]); });
+  fontCache.set(chars, css);
+  return css;
+}
+
+function buildExportHtml(withPersonal, dark){
+  const ws = CONFIG.WEEK_START;
+  const y = cursor.getFullYear(), m = cursor.getMonth();
+  const list = events.filter(e => !e.bg && !hidden.has(e.category||'') && (withPersonal || !e.personal));
+  const map = buildDayMap(list);
+  const offset = (new Date(y,m,1).getDay() - ws + 7) % 7;
+  const start = new Date(y, m, 1 - offset);
+  const weeks = Math.ceil((offset + new Date(y,m+1,0).getDate()) / 7);
+  const MAX = 5;
+  let cells = '';
+  for(let i=0;i<weeks*7;i++){
+    const d = addDays(start,i), k = keyOf(d);
+    const items = map.get(k) || [];
+    const bg = bgByDay.get(k);
+    const shown = items.slice(0, items.length > MAX ? MAX-1 : MAX);
+    const imgEv = items.find(({e}) => e.image);
+    const cls = ['exp-cell', d.getMonth()!==m&&'out', d.getDay()===0&&'sun', d.getDay()===6&&'sat', bg&&'bg', i>=(weeks-1)*7&&'last'].filter(Boolean).join(' ');
+    cells += `<div class="${cls}">${bg?`<div class="bgimg"><img src="${esc(imgCandidates(bg)[0])}" crossorigin="anonymous"></div>`:''}
+      <div class="exp-num">${d.getDate()}</div>
+      ${imgEv?`<img class="exp-thumb" src="${esc(imgCandidates(imgEv.e.image)[0])}" crossorigin="anonymous">`:''}
+      ${shown.map(({e,cont}) => `<div class="exp-chip ${cont?'cont':''} ${e.personal?'mine':''}" style="--c:${esc(e.c)}">${!cont&&e.startTime?`<span class="t">${e.startTime}</span>`:''}<span class="n">${esc(e.title)}</span></div>`).join('')}
+      ${items.length>shown.length?`<div class="exp-more">+${items.length-shown.length}件</div>`:''}</div>`;
+  }
+  const cats = [...catColors.keys()].filter(c => c && !hidden.has(c) && (withPersonal || c !== PERSONAL_LABEL));
+  const now = new Date();
+  return `<div class="exp ${dark?'dark':'light'}">
+    <div class="exp-top">
+      <div><div class="exp-title">${esc(source.title)}</div>
+        <div class="exp-month"><b>${m+1}</b><i>月</i><span>${y}</span></div></div>
+      <div class="exp-legend">${cats.map(c => `<span class="${c===PERSONAL_LABEL?'mine':''}" style="--c:${esc(catColors.get(c))}"><i></i>${esc(c)}</span>`).join('')}</div>
+    </div>
+    <div class="exp-cal">
+      <div class="exp-dow">${[...Array(7)].map((_,i)=>{const d=(i+ws)%7;return `<div class="${d===0?'sun':d===6?'sat':''}">${DOW[d]}</div>`;}).join('')}</div>
+      <div class="exp-grid">${cells}</div>
+    </div>
+    <div class="exp-foot"><span>${esc(location.host + location.pathname)}</span><span>${now.getFullYear()}/${now.getMonth()+1}/${now.getDate()} ${now.getHours()}:${pad2(now.getMinutes())} 時点</span></div>
+  </div>`;
+}
+
+async function makeExport(){
+  const token = ++expToken;
+  const pv = $('#expPreview'), save = $('#expSave'), share = $('#expShare');
+  save.disabled = true; share.hidden = true;
+  pv.innerHTML = '<span>作成中…</span>';
+  $('#expNote').textContent = '';
+  const stage = $('#exportStage');
+  try{
+    await loadH2I();
+    stage.innerHTML = buildExportHtml($('#expPersonal').checked, $('#expDark').checked);
+    const node = stage.firstElementChild;
+    // 画像の読み込みを待つ（CORS非対応の画像は空白になります）
+    let broken = 0;
+    await Promise.all([...node.querySelectorAll('img')].map(img => new Promise(ok => {
+      const done = () => ok();
+      const fail = () => { broken++; img.src = BLANK; ok(); };
+      if(img.complete && img.naturalWidth) return done();
+      img.onload = done; img.onerror = fail; setTimeout(done, 8000);
+    })));
+    let fontEmbedCSS = '';
+    try{ fontEmbedCSS = await fontCss(node.textContent); }catch(e){ console.warn('font', e); }
+    const opts = { pixelRatio: 2, cacheBust: false, imagePlaceholder: BLANK,
+                   backgroundColor: getComputedStyle(node).backgroundColor };
+    if(fontEmbedCSS) opts.fontEmbedCSS = fontEmbedCSS; else opts.skipFonts = true;
+    await window.htmlToImage.toPng(node, opts);           // 1回目はキャッシュ温め（Safari対策）
+    const blob = await window.htmlToImage.toBlob(node, opts);
+    if(token !== expToken) return;
+    expBlob = blob;
+    if(expUrl) URL.revokeObjectURL(expUrl);
+    expUrl = URL.createObjectURL(blob);
+    pv.innerHTML = `<img src="${expUrl}" alt="書き出したカレンダー">`;
+    save.disabled = false;
+    const file = new File([blob], expName(), {type:'image/png'});
+    if(navigator.canShare && navigator.canShare({files:[file]})) share.hidden = false;
+    if(broken) $('#expNote').textContent = `※ 画像${broken}枚は外部サイトの制限で書き出せませんでした。GitHubのリポジトリ内に置いた画像なら書き出せます。`;
+  }catch(e){
+    console.error(e);
+    if(token === expToken) pv.innerHTML = `<span>書き出しに失敗しました（${esc(e.message||e)}）</span>`;
+  }finally{
+    if(token === expToken) stage.innerHTML = '';
+  }
+}
+const expName = () => `calendar-${cursor.getFullYear()}-${pad2(cursor.getMonth()+1)}.png`;
+
+$('#exportBtn').onclick = () => {
+  $('#expDark').checked = matchMedia('(prefers-color-scheme: dark)').matches;
+  $('#expPersonal').closest('label').hidden = !events.some(e => e.personal);
+  $('#exportDlg').showModal();
+  makeExport();
+};
+$('#expPersonal').onchange = makeExport;
+$('#expDark').onchange = makeExport;
+$('#expSave').onclick = () => {
+  if(!expUrl) return;
+  const a = document.createElement('a');
+  a.href = expUrl; a.download = expName();
+  document.body.appendChild(a); a.click(); a.remove();
+};
+$('#expShare').onclick = async () => {
+  try{ await navigator.share({ files:[new File([expBlob], expName(), {type:'image/png'})], title: source.title }); }
+  catch(e){ /* キャンセル */ }
 };
 
 /* ---------- demo data ---------- */
