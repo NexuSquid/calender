@@ -473,7 +473,7 @@ function showDebug(){
   const fails = [...failedImgs.keys()];
   box.innerHTML = `<b>診断モード</b>
     <div>読み込んだ見出し：${(debugInfo.headers||[]).map(h=>`<code>${esc(h)}</code>`).join(' ') || '（なし）'}</div>
-    <div>画像列：${debugInfo.imageCol ? `<code>${esc(debugInfo.imageCol)}</code> を認識（URLが入っている行：${imgs.length}件）` : '<span class="ng">見つかりません。1行目に「画像」という列名を入れてください</span>'}</div>
+    <div>画像：${debugInfo.imageCol ? `<code>${esc(debugInfo.imageCol)}</code> 列を認識（${imgs.length}件）` : imgs.length ? `URL列の画像ファイル ${imgs.length}件を画像として表示` : '<span class="ng">画像が見つかりません。「画像」列か URL列に画像のパス／URLを入れてください</span>'}</div>
     ${debugInfo.imageCol && !imgs.length ? '<div class="ng">画像列が空として読み込まれています。セルに画像を直接貼る／=IMAGE() 関数では読み込めません。URLを文字で入れてください。</div>' : ''}
     ${imgs.slice(0,8).map(v => `<div class="mono">・${esc(v)} → ${esc(imgCandidates(normalizeImg(v))[0])}${failedImgs.has(normalizeImg(v))?' <span class="ng">表示失敗</span>':''}</div>`).join('')}
     ${fails.length ? `<div class="ng">表示できなかった画像：${fails.length}件（URLの間違い・共有設定・ファイル名の大文字小文字を確認）</div>` : ''}`;
@@ -573,7 +573,12 @@ function rowsToEvents(rows){
     const rawDate = get(r,'date');
     const start = parseDate(rawDate);
     const title = get(r,'title');
-    const image = normalizeImg(get(r,'image'));
+    let image = normalizeImg(get(r,'image'));
+    let link = get(r,'url');
+    // URL列に画像ファイル（.png/.jpg など、またはドライブの画像）が入っていたら画像として扱う
+    if(!image && link && (/\.(png|jpe?g|gif|webp|avif|svg)(\?.*)?$/i.test(link) || /drive\.google\.com\/(file\/d|open\?id|uc\?)/.test(link))){
+      image = normalizeImg(link); (debugInfo.imageValues ||= []).push(link); link = '';
+    }
     if(!start || (!title && !image)) continue;
     let end = parseDate(get(r,'endDate')) || start;
     if(end < start) end = start;
@@ -586,7 +591,7 @@ function rowsToEvents(rows){
       category: get(r,'category'),
       place: get(r,'place'),
       desc: get(r,'desc'),
-      url: get(r,'url'),
+      url: link,
       color: get(r,'color'),
       image,
       bg: !title,      // タイトル無し＋画像だけの行 → マス全体の背景画像
