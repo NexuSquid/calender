@@ -219,6 +219,18 @@
   #debugBox .mono{font-family:ui-monospace,monospace;font-size:12px}
   .img-err{display:grid;place-items:center;background:#ffe3e3;color:#c62828;font-size:11px;font-weight:700;border-radius:8px;min-height:24px}
 
+  /* ---------- Googleカレンダー ---------- */
+  .gc-card{border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px;background:var(--bg)}
+  .gc-head{display:flex;align-items:center;gap:8px;font-size:15px}
+  .gc-tag{font-size:11px;font-weight:700;color:#fff;background:#4285f4;border-radius:999px;padding:2px 8px}
+  .gc-p{font-size:13px;color:var(--muted);line-height:1.7;margin:6px 0 0}
+  .gc-card .linkbtn{background:#4285f4;color:#fff}
+  .copyrow{display:flex;gap:8px}
+  .copyrow input{flex:1;min-width:0;font-size:12.5px !important}
+  .gc-add{display:inline-flex;align-items:center;gap:6px;margin:14px 8px 0 0;border:1px solid var(--line);background:var(--card);color:var(--ink);text-decoration:none;font-weight:700;font-size:14px;padding:9px 14px;border-radius:12px}
+  .gc-add:hover{background:var(--hover)}
+  .gc-add i{width:10px;height:10px;border-radius:2px;background:#4285f4}
+
   /* ---------- mobile ---------- */
   @media (max-width:720px){
     .controls{width:100%}
@@ -264,6 +276,9 @@
         <button data-view="list">リスト</button>
       </div>
       <button class="btn primary" id="addBtn" title="個人の予定を追加">＋ 予定</button>
+      <button class="icon-btn" id="gcalBtn" title="Googleカレンダーに登録" aria-label="Googleカレンダーに登録">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4M12 12v6M9 15h6"/></svg>
+      </button>
       <button class="icon-btn" id="exportBtn" title="画像で保存" aria-label="画像で保存">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="9" r="1.6"/><path d="M21 15l-5-5L5 21"/></svg>
       </button>
@@ -316,7 +331,7 @@
     <label>色</label>
     <div class="swatches" id="swatches"></div>
     <div class="form-err" id="pErr"></div>
-    <div class="hint">個人の予定はこのブラウザだけに保存されます。ほかの人には表示されません。</div>
+    <div class="hint">個人の予定はこのブラウザだけに保存されます（ほかの人には表示されません）。スマホとPCで共有したいときは、右上の <b>カレンダー＋</b> からGoogleカレンダーに登録し、自分の予定はGoogleカレンダー側に入れるのがおすすめです。</div>
     <div class="actions">
       <button type="button" class="btn" data-close>キャンセル</button>
       <button type="submit" class="btn primary">保存</button>
@@ -340,6 +355,30 @@
       <button class="btn" id="expShare" hidden>共有</button>
       <button class="btn primary" id="expSave" disabled>PNGを保存</button>
     </div>
+  </div>
+</dialog>
+
+<dialog id="gcalDlg" style="--c:#4285f4">
+  <div class="dlg-head"></div>
+  <div class="dlg-body form">
+    <button class="dlg-x" data-close aria-label="閉じる">×</button>
+    <h2 class="dlg-title" style="font-size:19px">Googleカレンダーに登録</h2>
+
+    <div class="gc-card">
+      <div class="gc-head"><b>まとめて購読する</b><span class="gc-tag">おすすめ</span></div>
+      <p class="gc-p">このカレンダーの予定が、自分のGoogleカレンダーに表示されます。予定の追加や変更も自動で反映されます（Google側の更新は数時間〜1日おき）。</p>
+      <a class="linkbtn" id="gcSubscribe" target="_blank" rel="noopener">Googleカレンダーで購読する ↗</a>
+      <label for="gcUrl" style="margin-top:14px">うまく開けないときは、このURLを「他のカレンダー ＋ → URLで追加」に貼り付け</label>
+      <div class="copyrow"><input id="gcUrl" readonly><button class="btn" id="gcCopy">コピー</button></div>
+      <div class="hint" id="gcStatus"></div>
+    </div>
+
+    <div class="gc-card">
+      <div class="gc-head"><b>この月の予定をファイルで取り込む</b></div>
+      <p class="gc-p">表示中の月の予定を .ics ファイルで保存します。Googleカレンダーの「設定 → インポート」で一度だけ取り込めます（後からの変更は反映されません）。</p>
+      <button class="btn" id="gcIcs">.ics を保存</button>
+    </div>
+    <div class="hint">1件ずつ追加したいときは、予定を開いて「Googleカレンダーに追加」を押してください。</div>
   </div>
 </dialog>
 
@@ -532,7 +571,11 @@ function parseDate(s){
   m = s.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);            // 11/9/2026 (US形式)
   if(m) return new Date(+m[3], +m[1]-1, +m[2]);
   m = s.match(/(\d{1,2})\s*[\/月]\s*(\d{1,2})/);            // 11/9, 11月9日（年なし→今年）
-  if(m) return new Date(new Date().getFullYear(), +m[1]-1, +m[2]);
+  if(m){   // 年なし → 今日に一番近い年（12月に「1/5」と書けば来年の1/5）
+    const t = new Date(), ty = t.getFullYear();
+    return [ty-1, ty, ty+1].map(y => new Date(y, +m[1]-1, +m[2]))
+      .sort((a,b) => Math.abs(a - t) - Math.abs(b - t))[0];
+  }
   return null;
 }
 
@@ -827,7 +870,8 @@ function openEvent(i){
       <div class="row"><span class="ic">${ICON.clock}</span><span>${esc(fmtWhen(e))}</span></div>
       ${e.place?`<div class="row"><span class="ic">${ICON.pin}</span><span>${linkify(e.place)}</span></div>`:''}
       ${e.desc?`<div class="row"><span class="ic">${ICON.note}</span><span class="desc">${linkify(e.desc)}</span></div>`:''}
-      ${/^https?:\/\//.test(e.url)?`<a class="linkbtn" href="${esc(e.url)}" target="_blank" rel="noopener">リンクを開く ↗</a>`:''}
+      ${/^https?:\/\//.test(e.url)?`<a class="linkbtn" href="${esc(e.url)}" target="_blank" rel="noopener" style="margin-right:8px">リンクを開く ↗</a>`:''}
+      <a class="gc-add" href="${esc(gcalTemplateUrl(e))}" target="_blank" rel="noopener"><i></i>Googleカレンダーに追加</a>
       ${e.personal?`<div class="actions"><span class="mine-note">自分だけに表示されている予定です</span>
         <button class="btn" data-edit="${esc(e.id)}">編集</button>
         <button class="btn danger" data-del="${esc(e.id)}">削除</button></div>`:''}
@@ -1091,6 +1135,102 @@ $('#expSave').onclick = () => {
 $('#expShare').onclick = async () => {
   try{ await navigator.share({ files:[new File([expBlob], expName(), {type:'image/png'})], title: source.title }); }
   catch(e){ /* キャンセル */ }
+};
+
+/* ---------- Googleカレンダー連携 ---------- */
+const GC_DEFAULT_MIN = 120;   // 終了時刻が無い予定の長さ（分）。scripts/build-ics.mjs と同じ
+const p2 = n => String(n).padStart(2,'0');
+const ymdStr = d => `${d.getFullYear()}${p2(d.getMonth()+1)}${p2(d.getDate())}`;
+// 予定の開始・終了（日時の文字列）。終了時刻が開始より前なら翌日扱い
+function evRange(e){
+  if(!e.startTime) return { allDay:true, s: ymdStr(e.start), e: ymdStr(addDays(e.end,1)) };
+  const [sh,sm] = e.startTime.split(':').map(Number);
+  let endDay = e.end, eMin;
+  if(e.endTime){
+    const [eh,em] = e.endTime.split(':').map(Number); eMin = eh*60+em;
+    if(sameDay(e.start,e.end) && eMin <= sh*60+sm) endDay = addDays(e.start,1);
+  }else{
+    eMin = sh*60+sm + GC_DEFAULT_MIN;
+    if(sameDay(e.start,e.end) && eMin >= 1440){ endDay = addDays(e.start,1); eMin -= 1440; }
+  }
+  return { allDay:false, s: `${ymdStr(e.start)}T${p2(sh)}${p2(sm)}00`, e: `${ymdStr(endDay)}T${p2(Math.floor(eMin/60)%24)}${p2(eMin%60)}00` };
+}
+function evDetails(e){
+  return [e.category && e.category !== PERSONAL_LABEL && `【${e.category}】`, e.desc, /^https?:/.test(e.url) && e.url,
+          /^https?:/.test(location.href) && `カレンダー: ${siteBase()}`].filter(Boolean).join('\n');
+}
+function gcalTemplateUrl(e){
+  const r = evRange(e);
+  const q = new URLSearchParams({ action:'TEMPLATE', text:e.title, dates:`${r.s}/${r.e}`, ctz:'Asia/Tokyo' });
+  const d = evDetails(e); if(d) q.set('details', d);
+  if(e.place) q.set('location', e.place);
+  return 'https://calendar.google.com/calendar/render?' + q.toString();
+}
+const siteBase = () => location.origin + location.pathname.replace(/[^/]*$/, '');
+const icsUrl = () => siteBase() + 'calendar.ics';
+
+const icsEsc = s => String(s).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\r?\n/g,'\\n');
+function icsFold(line){
+  const enc = new TextEncoder(), out = []; let cur = '', bytes = 0;
+  for(const ch of line){
+    const b = enc.encode(ch).length;
+    if(bytes + b > (out.length ? 74 : 75)){ out.push(cur); cur = ''; bytes = 0; }
+    cur += ch; bytes += b;
+  }
+  out.push(cur); return out.join('\r\n ');
+}
+function buildMonthIcs(){
+  const y = cursor.getFullYear(), m = cursor.getMonth();
+  const first = new Date(y,m,1), last = new Date(y,m+1,0);
+  const list = events.filter(e => !e.bg && e.end >= first && e.start <= last);
+  const stamp = new Date().toISOString().replace(/[-:]/g,'').replace(/\.\d+/,'');
+  const L = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//NexuSquid//Sheet Calendar//JA','CALSCALE:GREGORIAN','METHOD:PUBLISH',
+    'BEGIN:VTIMEZONE','TZID:Asia/Tokyo','BEGIN:STANDARD','DTSTART:19700101T000000','TZOFFSETFROM:+0900','TZOFFSETTO:+0900','TZNAME:JST','END:STANDARD','END:VTIMEZONE'];
+  list.forEach((e,i) => {
+    const r = evRange(e);
+    L.push('BEGIN:VEVENT', `UID:${ymdStr(e.start)}-${i}-${Math.random().toString(36).slice(2,8)}@nexusquid-calendar`, `DTSTAMP:${stamp}`,
+      r.allDay ? `DTSTART;VALUE=DATE:${r.s}` : `DTSTART;TZID=Asia/Tokyo:${r.s}`,
+      r.allDay ? `DTEND;VALUE=DATE:${r.e}`   : `DTEND;TZID=Asia/Tokyo:${r.e}`,
+      `SUMMARY:${icsEsc(e.title)}`);
+    const d = evDetails(e); if(d) L.push(`DESCRIPTION:${icsEsc(d)}`);
+    if(e.place) L.push(`LOCATION:${icsEsc(e.place)}`);
+    L.push('END:VEVENT');
+  });
+  L.push('END:VCALENDAR');
+  return { text: L.map(icsFold).join('\r\n') + '\r\n', count: list.length };
+}
+
+$('#gcalBtn').onclick = async () => {
+  const url = icsUrl();
+  $('#gcUrl').value = url;
+  $('#gcSubscribe').href = 'https://calendar.google.com/calendar/r?cid=' + encodeURIComponent(url.replace(/^https?:/, 'webcal:'));
+  const st = $('#gcStatus');
+  st.textContent = '';
+  $('#gcalDlg').showModal();
+  if(!/^https?:/.test(location.href)){ st.textContent = '※ 購読はGitHub Pagesで公開したページから使えます。'; return; }
+  try{
+    const res = await fetch(url, {cache:'no-store'});
+    const text = res.ok ? await res.text() : '';
+    if(!text.startsWith('BEGIN:VCALENDAR')) throw 0;
+    const n = (text.match(/BEGIN:VEVENT/g) || []).length;
+    st.textContent = `✓ 購読用データあり（${n}件）`;
+  }catch(e){
+    st.innerHTML = '<span style="color:var(--sun);font-weight:700">calendar.ics がまだ公開されていません。</span>GitHub Actions の設定（build.yml）が必要です。';
+  }
+};
+$('#gcCopy').onclick = async () => {
+  const inp = $('#gcUrl');
+  try{ await navigator.clipboard.writeText(inp.value); }catch(e){ inp.select(); document.execCommand && document.execCommand('copy'); }
+  $('#gcCopy').textContent = 'コピーしました'; setTimeout(() => $('#gcCopy').textContent = 'コピー', 1500);
+};
+$('#gcIcs').onclick = () => {
+  const { text, count } = buildMonthIcs();
+  if(!count){ $('#gcIcs').textContent = 'この月の予定はありません'; setTimeout(() => $('#gcIcs').textContent = '.ics を保存', 1500); return; }
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([text], {type:'text/calendar'}));
+  a.download = `calendar-${cursor.getFullYear()}-${p2(cursor.getMonth()+1)}.ics`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
 };
 
 /* ---------- demo data ---------- */
